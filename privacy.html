@@ -93,8 +93,8 @@
     <div class="row">
       <h3>Fire's desk</h3>
       <p><code>fire-market-maker.fly.dev</code>, run by Fire.</p>
-      <p>When you buy eUSD with Bitcoin, the desk sees your Ethereum address, your MobileCoin address, the amount, and your IP address. It takes the USDC with a permit you sign and pays eUSD to your MobileCoin address, or returns the USDC to your Ethereum address if it can't.</p>
-      <p class="when">When: only when you buy eUSD, and while that order is running.</p>
+      <p>When you buy or sell eUSD, the desk sees your Ethereum address, your MobileCoin address, the amount, and your IP address. Buying, it takes the USDC with a permit you sign and pays eUSD to your MobileCoin address, or returns the USDC to your Ethereum address if it can't. Selling, you send it eUSD and sign a binding that lets its escrow pay USDC only to your Ethereum address.</p>
+      <p class="when">When: only when you buy or sell eUSD, and while that order is running.</p>
     </div>
     <div class="row">
       <h3>Prices</h3>
@@ -105,8 +105,8 @@
     <div class="row">
       <h3>Ethereum nodes</h3>
       <p><code>ethereum-rpc.publicnode.com</code> and <code>eth.drpc.org</code>.</p>
-      <p>They are asked for your Ethereum address's USDC balance and permit count, and see that address and your IP address. Nothing is sent to Ethereum through them.</p>
-      <p class="when">When: only after you start buying eUSD, while your MobileCoin account is open.</p>
+      <p>They are asked for your Ethereum address's balances, its transaction count, fees and receipts, and see that address and your IP address. A transaction you send from that address (USDC, ETH, or moving USDC into your balance) goes to both of them, and from there to Ethereum, where it is public like every Ethereum transaction.</p>
+      <p class="when">When: only once your Ethereum address is in use (buying or selling eUSD, or opening it), while the app shows it, and when you send from it.</p>
     </div>
     <div class="row">
       <h3>Bridge operators</h3>
