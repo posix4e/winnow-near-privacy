@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Winnow NEAR Privacy</title>
+<meta name="description" content="What the Winnow NEAR research build shares, with whom, and when.">
+<style>
+  :root {
+    --bg: #fbfbf9; --fg: #1d1d1b; --muted: #5f5f5a; --line: #e2e1dc;
+    --card: #ffffff; --accent: #2f5d50; --code: #f1f0eb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141413; --fg: #ecebe6; --muted: #a3a29c; --line: #2e2d2a;
+      --card: #1c1c1a; --accent: #8cc4b1; --code: #252522;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141413; --fg: #ecebe6; --muted: #a3a29c; --line: #2e2d2a;
+    --card: #1c1c1a; --accent: #8cc4b1; --code: #252522;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  main { max-width: 760px; margin: 0 auto; padding: 40px 16px 64px; }
+  h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 8px; }
+  h2 { font-size: 1.25rem; margin: 40px 0 8px; }
+  p, li { color: var(--fg); }
+  .lede { font-size: 1.1rem; color: var(--muted); margin: 0 0 24px; }
+  .meta { color: var(--muted); font-size: .9rem; }
+  a { color: var(--accent); }
+  code { background: var(--code); padding: 1px 5px; border-radius: 4px; font-size: .9em; overflow-wrap: anywhere; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px 16px; margin: 16px 0; }
+  .row { padding: 14px 0; border-top: 1px solid var(--line); }
+  .row:first-child { border-top: 0; }
+  .row h3 { font-size: 1rem; margin: 0 0 4px; }
+  .row p { margin: 4px 0; }
+  .when { color: var(--muted); font-size: .92rem; }
+  ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Winnow NEAR privacy</h1>
+  <p class="lede">What the Winnow NEAR research build shares, with whom, and when. Apart from TestFlight itself, nothing here happens until you turn on other coins and allow the services listed below.</p>
+  <p class="meta">Effective October 9, 2026 · Applies to the Winnow NEAR app (<code>com.btcswift.near</code>) distributed through TestFlight.</p>
+
+  <p>Winnow NEAR is the Winnow Bitcoin wallet plus a NEAR account and NEAR Intents, which let it hold USDC and other coins, swap Bitcoin, and pay people on other networks. Everything the Bitcoin side does is described in the <a href="https://winnowwallet.com/privacy">Winnow privacy policy</a>, which applies to this build as well. This page covers only what the NEAR features add.</p>
+  <p>Like Winnow, this build has no account with us, no analytics, no advertising SDK and no app-managed crash reporting. We do not run a server for it.</p>
+
+  <h2>Before you allow anything</h2>
+  <p>Until you tap <em>Hold dollars and other coins</em> and then <em>Allow</em>, the app sends nothing to the services below. The consent screen lists each service by address. If that list changes in an update, the app asks again before using it.</p>
+
+  <h2>On your device</h2>
+  <ul>
+    <li><strong>Your NEAR account</strong> is derived from your wallet's recovery words (SLIP-0010, <code>m/44'/397'/0'</code>), the same account other NEAR wallets derive from those words. The signing key is computed only when you approve an action with Face ID or your passcode, and it is not stored separately.</li>
+    <li><strong>Swap records and NEAR activity</strong> are kept in an encrypted file in the app's storage.</li>
+    <li><strong>Addresses on other networks</strong> that you save for people stay on the device with the rest of your contacts. Sharing your own card includes your NEAR account ID.</li>
+    <li><strong>Verification</strong> of NEAR block headers and transaction results happens on the device and sends nothing extra.</li>
+  </ul>
+
+  <h2>What leaves the device</h2>
+  <div class="card">
+    <div class="row">
+      <h3>NEAR nodes</h3>
+      <p><code>rpc.mainnet.fastnear.com</code> (FastNEAR), <code>near.drpc.org</code> (dRPC), <code>rpc.mainnet.near.org</code> (NEAR Foundation), and <code>archival-rpc.mainnet.fastnear.com</code> for older blocks.</p>
+      <p>They see your NEAR account ID, the balances and contracts the app reads, any transaction you submit, and your connection's IP address (or your gateway's exit, when you route through your own Tor gateways).</p>
+      <p class="when">When: while the app is open, every two minutes, every 30 seconds while a swap runs, and before each action.</p>
+    </div>
+    <div class="row">
+      <h3>1Click swap service</h3>
+      <p><code>1click.chaindefuser.com</code>, the NEAR Intents swap service.</p>
+      <p>Quote requests carry the coins and amounts, your NEAR account ID, the recipient's address on their network, a refund address (a fresh address of your wallet or your NEAR account), and your IP address. Status checks name the swap's deposit address. The service holds the money for the minute or so a swap or payment takes.</p>
+      <p class="when">When: when you ask for a price, confirm a swap or payment, request to be paid in another coin, and while a swap is in progress.</p>
+    </div>
+    <div class="row">
+      <h3>Bridge operators</h3>
+      <p>Bitcoin and some other coins inside NEAR Intents are held by bridge operators: the POA bridge (operator custody), Omni (NEAR's validators) or HOT (HOT's signers), labelled in the app. A bridge sees the Bitcoin address it pays out to and the address deposits come from.</p>
+      <p class="when">When: when Bitcoin moves in or out, and when a payment is delivered on another network.</p>
+    </div>
+    <div class="row">
+      <h3>Public blockchains</h3>
+      <p>NEAR transactions, including transfers inside NEAR Intents, are public and tied to your NEAR account. Bitcoin deposits to swap addresses, and payouts on other networks, are public on those chains. Anyone watching the swap service's addresses may link them to each other and to your NEAR account.</p>
+      <p class="when">When: every swap, payment or transfer.</p>
+    </div>
+    <div class="row">
+      <h3>Apple iCloud (optional)</h3>
+      <p>If iCloud is available, swap records and NEAR activity sync between your own devices through the app's CloudKit container. They are encrypted on the device with a key kept in your iCloud Keychain, so Apple stores them without being able to read them. Encrypted wallet backup works as described in the Winnow policy.</p>
+      <p class="when">When: after the app refreshes, while iCloud is signed in.</p>
+    </div>
+    <div class="row">
+      <h3>Apple TestFlight</h3>
+      <p>Because this build is distributed through TestFlight, Apple collects the crash reports, feedback and usage data that TestFlight collects, under Apple's terms, and shares some of it with us (for example, your feedback and the name and email you were invited with).</p>
+      <p class="when">When: as TestFlight does for any beta app.</p>
+    </div>
+  </div>
+
+  <h2>Who we are and limits</h2>
+  <p>Winnow NEAR is a research build. It runs on real networks with real money, and every action is capped at 100,000 sats or $100. We do not sell or share data. Apart from what TestFlight passes on, we do not receive the information above: it goes from your device to the services named, under their own policies.</p>
+  <p>Questions: <a href="mailto:a@wuli.nu">a@wuli.nu</a>. Changes to this page are dated above.</p>
+</main>
+</body>
+</html>
