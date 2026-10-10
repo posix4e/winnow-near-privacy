@@ -62,6 +62,8 @@
     <li><strong>Verification</strong> of NEAR block headers and transaction results happens on the device and sends nothing extra.</li>
     <li><strong>Your MobileCoin account</strong> is derived from the same recovery words (<code>m/44'/866'/0'</code>), the account Signal and Fire derive from them. Its keys are derived when you open it with Face ID or your passcode and are kept in memory only while the app is in front.</li>
     <li><strong>Your Ethereum address</strong> is derived from the same recovery words (<code>m/44'/60'/0'/0/0</code>). It only holds USDC on its way to Fire's desk. Its key is computed only when you approve a conversion with Face ID or your passcode.</li>
+    <li><strong>Receipts.</strong> A receipt for a MobileCoin payment you received is a link to <code>explorer.fire.co</code> that you choose to share. It carries the payment's block, the values that open its amount, your MobileCoin address, a signature by your account's key and, only if you turn it on for that receipt, your <code>@handle</code>. Making one sends nothing. Everything is after the <code>#</code> in the link, which browsers do not send to the server; whoever you give the link to can read it.</li>
+    <li><strong>Notifications</strong> are made on the device. A background check reads the state of money in flight (swaps, desk orders, Ethereum sends) from the services named below and shows a notification when one finishes. Nothing goes to a push service.</li>
   </ul>
 
   <h2>What leaves the device</h2>
@@ -88,7 +90,8 @@
       <h3>Fire's directory</h3>
       <p><code>fire-directory.fly.dev</code>, run by Fire.</p>
       <p>It sees the <code>@handle</code> or Fire link code you look up, and your IP address. Each lookup is signed with a new throwaway key, so lookups are not linked to each other or to your wallet.</p>
-      <p class="when">When: only when you send to a Fire <code>@handle</code> or a Fire link that names one.</p>
+      <p>If you claimed a handle in the Fire app with the same recovery words, the app can show it. It reads your profile and changes its two switches (whether people can find your handle, and whether a lookup also gives your Ethereum address) with the device key Fire derives from those words, so the directory links those requests to your handle, as it does for the Fire app. Making an anonymous share link asks it for a code tied to that key. The app never claims a handle and never changes the addresses the directory holds.</p>
+      <p class="when">When: lookups when you send to a Fire <code>@handle</code> or a Fire link that names one; your profile when you tap "Check for a Fire handle", change a switch or make a share link.</p>
     </div>
     <div class="row">
       <h3>Fire's desk</h3>
