@@ -46,9 +46,9 @@
 <main>
   <h1>Winnow NEAR privacy</h1>
   <p class="lede">What the Winnow NEAR research build shares, with whom, and when. Apart from TestFlight itself, nothing here happens until you turn on other coins and allow the services listed below.</p>
-  <p class="meta">Effective October 9, 2026 · Applies to the Winnow NEAR app (<code>com.btcswift.near</code>) distributed through TestFlight.</p>
+  <p class="meta">Effective October 10, 2026 · Applies to the Winnow NEAR app (<code>com.btcswift.near</code>) distributed through TestFlight.</p>
 
-  <p>Winnow NEAR is the Winnow Bitcoin wallet plus a NEAR account and NEAR Intents, which let it hold USDC and other coins, swap Bitcoin, and pay people on other networks. Everything the Bitcoin side does is described in the <a href="https://winnowwallet.com/privacy">Winnow privacy policy</a>, which applies to this build as well. This page covers only what the NEAR features add.</p>
+  <p>Winnow NEAR is the Winnow Bitcoin wallet plus a NEAR account and NEAR Intents, which let it hold USDC and other coins, swap Bitcoin, and pay people on other networks, and a MobileCoin account for MOB and eUSD, to pay and be paid by Signal and Fire users. Everything the Bitcoin side does is described in the <a href="https://winnowwallet.com/privacy">Winnow privacy policy</a>, which applies to this build as well. This page covers only what the NEAR features add.</p>
   <p>Like Winnow, this build has no account with us, no analytics, no advertising SDK and no app-managed crash reporting. We do not run a server for it.</p>
 
   <h2>Before you allow anything</h2>
@@ -60,6 +60,7 @@
     <li><strong>Swap records and NEAR activity</strong> are kept in an encrypted file in the app's storage.</li>
     <li><strong>Addresses on other networks</strong> that you save for people stay on the device with the rest of your contacts. Sharing your own card includes your NEAR account ID.</li>
     <li><strong>Verification</strong> of NEAR block headers and transaction results happens on the device and sends nothing extra.</li>
+    <li><strong>Your MobileCoin account</strong> is derived from the same recovery words (<code>m/44'/866'/0'</code>), the account Signal and Fire derive from them. Its keys are derived when you open it with Face ID or your passcode and are kept in memory only while the app is in front.</li>
   </ul>
 
   <h2>What leaves the device</h2>
@@ -75,6 +76,18 @@
       <p><code>1click.chaindefuser.com</code>, the NEAR Intents swap service.</p>
       <p>Quote requests carry the coins and amounts, your NEAR account ID, the recipient's address on their network, a refund address (a fresh address of your wallet or your NEAR account), and your IP address. Status checks name the swap's deposit address. The service holds the money for the minute or so a swap or payment takes.</p>
       <p class="when">When: when you ask for a price, confirm a swap or payment, request to be paid in another coin, and while a swap is in progress.</p>
+    </div>
+    <div class="row">
+      <h3>MobileCoin</h3>
+      <p><code>node1.prod.mobilecoinww.com</code> and <code>fog.prod.mobilecoinww.com</code> (MobileCoin), and <code>fog-rpt-prd.namda.net</code> (Signal's, named by Android users' addresses).</p>
+      <p>They see your connection's IP address (or your gateway's exit) and the requests the app makes. Balances come from MobileCoin's Fog service, which runs in Intel SGX secure enclaves. The app checks each enclave's attestation before using it, and the enclaves are built so the operator cannot read which coins are yours. A payment you send is submitted to MobileCoin's consensus servers; amounts and parties are hidden on MobileCoin's ledger.</p>
+      <p class="when">When: while your MobileCoin account is open, and when you send.</p>
+    </div>
+    <div class="row">
+      <h3>Fire's directory</h3>
+      <p><code>fire-directory.fly.dev</code>, run by Fire.</p>
+      <p>It sees the <code>@handle</code> or Fire link code you look up, and your IP address. Each lookup is signed with a new throwaway key, so lookups are not linked to each other or to your wallet.</p>
+      <p class="when">When: only when you send to a Fire <code>@handle</code> or a Fire link that names one.</p>
     </div>
     <div class="row">
       <h3>Bridge operators</h3>
