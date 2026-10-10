@@ -61,6 +61,7 @@
     <li><strong>Addresses on other networks</strong> that you save for people stay on the device with the rest of your contacts. Sharing your own card includes your NEAR account ID.</li>
     <li><strong>Verification</strong> of NEAR block headers and transaction results happens on the device and sends nothing extra.</li>
     <li><strong>Your MobileCoin account</strong> is derived from the same recovery words (<code>m/44'/866'/0'</code>), the account Signal and Fire derive from them. Its keys are derived when you open it with Face ID or your passcode and are kept in memory only while the app is in front.</li>
+    <li><strong>Your Ethereum address</strong> is derived from the same recovery words (<code>m/44'/60'/0'/0/0</code>). It only holds USDC on its way to Fire's desk. Its key is computed only when you approve a conversion with Face ID or your passcode.</li>
   </ul>
 
   <h2>What leaves the device</h2>
@@ -88,6 +89,18 @@
       <p><code>fire-directory.fly.dev</code>, run by Fire.</p>
       <p>It sees the <code>@handle</code> or Fire link code you look up, and your IP address. Each lookup is signed with a new throwaway key, so lookups are not linked to each other or to your wallet.</p>
       <p class="when">When: only when you send to a Fire <code>@handle</code> or a Fire link that names one.</p>
+    </div>
+    <div class="row">
+      <h3>Fire's desk</h3>
+      <p><code>fire-market-maker.fly.dev</code>, run by Fire.</p>
+      <p>When you buy eUSD with Bitcoin, the desk sees your Ethereum address, your MobileCoin address, the amount, and your IP address. It takes the USDC with a permit you sign and pays eUSD to your MobileCoin address, or returns the USDC to your Ethereum address if it can't.</p>
+      <p class="when">When: only when you buy eUSD, and while that order is running.</p>
+    </div>
+    <div class="row">
+      <h3>Ethereum nodes</h3>
+      <p><code>ethereum-rpc.publicnode.com</code> and <code>eth.drpc.org</code>.</p>
+      <p>They are asked for your Ethereum address's USDC balance and permit count, and see that address and your IP address. Nothing is sent to Ethereum through them.</p>
+      <p class="when">When: only after you start buying eUSD, while your MobileCoin account is open.</p>
     </div>
     <div class="row">
       <h3>Bridge operators</h3>
