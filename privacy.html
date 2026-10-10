@@ -94,6 +94,18 @@
       <p class="when">When: lookups when you send to a Fire <code>@handle</code> or a Fire link that names one; your profile when you tap "Check for a Fire handle", change a switch or make a share link.</p>
     </div>
     <div class="row">
+      <h3>Fire's swap proxy</h3>
+      <p><code>fire-grpc-proxy.fly.dev</code>, run by Fire, which passes requests to MobileCoin's DEQS exchange.</p>
+      <p>It sees which coin you want to swap for which, a small proof of work the app solves to be let in, and your IP address. It does not see your address or the amount you enter. The swap itself is a MobileCoin transaction like any other.</p>
+      <p class="when">When: only when you ask for a price to swap MOB and eUSD.</p>
+    </div>
+    <div class="row">
+      <h3>Bank transfers: Fire's bridge and Iron</h3>
+      <p><code>fire-iron-bridge.fly.dev</code>, run by Fire, which passes requests to Iron (a MoonPay company).</p>
+      <p>Your requests are signed with the device key Fire derives from your recovery words, so they reach the same records as the Fire app. The bridge and Iron see your email address, your Ethereum address, the bank account you add for cash-outs (name, routing and account numbers, phone and address) and your IP address. Iron's identity check runs on Iron's own pages, which the app cannot read; Winnow keeps none of it on the device.</p>
+      <p class="when">When: only when you open "Bank" with Face ID or your passcode and use it.</p>
+    </div>
+    <div class="row">
       <h3>Fire's desk</h3>
       <p><code>fire-market-maker.fly.dev</code>, run by Fire.</p>
       <p>When you buy or sell eUSD, the desk sees your Ethereum address, your MobileCoin address, the amount, and your IP address. Buying, it takes the USDC with a permit you sign and pays eUSD to your MobileCoin address, or returns the USDC to your Ethereum address if it can't. Selling, you send it eUSD and sign a binding that lets its escrow pay USDC only to your Ethereum address.</p>
